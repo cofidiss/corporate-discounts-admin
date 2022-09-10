@@ -5,3 +5,7 @@ ie.    <input
           name="discountDescription"
           defaultValue={1}
         />
+
+
+dom elemanına html attribute atmak istersen hep küçük harfli olmalı atribute ismi
+ ie     <tr discountid={a}> olmalı     <tr discountId={a}> işe yaramaz gelmez attirbute. a undefined ise yine attribute gelmez. discountid="" de olmaz.
