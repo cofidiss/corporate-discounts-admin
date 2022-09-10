@@ -1,14 +1,21 @@
+import AdminDiscountTableRow from "../AdminDiscountTableRow/AdminDiscountTableRow";
+import React, {useState} from 'react';
 
 
 
+function AdminDiscountTable(props){
+
+   const corporateDiscounts=  props.corporateDiscounts;
+
+const discountScopeLov = props.discountScopeLov;
 
 
-function AdminDiscountTable(){
+return (
+   <div>
 
-
-
-
-return
+  {corporateDiscounts.map( x => (<AdminDiscountTableRow currentAdminDiscountRow={x} discountScopeLov={discountScopeLov} />))}
+  </div>
+);
 
 }
 
