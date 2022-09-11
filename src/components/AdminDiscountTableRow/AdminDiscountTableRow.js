@@ -5,41 +5,46 @@ function AdminDiscountTableRow(props) {
   const currentAdminDiscountRow = props.currentAdminDiscountRow;
   const discountScopeLov = props.discountScopeLov;
 
-debugger;
-  const [discountDescriptionState,setDiscountDescription] = useState(currentAdminDiscountRow.discountInfo);
+  const [isRowUpdatedState,setIsRowUpdatedState] = useState(false);
+const [formState,setFormState] = useState({discountInfoState:currentAdminDiscountRow.discountInfo,
+  validCitiesState:currentAdminDiscountRow.validCities,discountScopeId:currentAdminDiscountRow.discountScopeId});
 
-  const [validCitiesState,setValidCitiesState] = useState(currentAdminDiscountRow.validCities);
+ 
 
   return (
-    <tr discountid={currentAdminDiscountRow.discountId}>
+    <tr discountid={currentAdminDiscountRow.discountId} isrowupdated={isRowUpdatedState.toString()}>
       <td>
         <p>{currentAdminDiscountRow.firmName}</p>
       </td>
       <td>
-        <input onChange={e=> {debugger; setDiscountDescription(e.currentTarget.value);}}
+        <input onChange={e=> {setIsRowUpdatedState(true); setFormState(prevState=>{ return {...prevState,discountInfoState:e.target.value};});}}
           type="text"
           id="discount_description"
           name="discountDescription"
-          value={discountDescriptionState}
+          value={formState.discountInfoState}
         />
       </td>
       <td>
-        <select id="discount_scope" name="discountScope">
+        <select id="discount_scope" name="discountScope" onChange={e =>{setIsRowUpdatedState(true); setFormState(prevState => {return {...formState,discountScopeId:e.target.value}; }
+          
+         )}}
+        
+        value={formState.discountScopeId}>
           {discountScopeLov.map((x) => (
             <option value={x.discountScopeId}>{x.discountScopeName}</option>
           ))}
-          <p></p>
+          
         </select>
       </td>
       <td>
         <p>{currentAdminDiscountRow.firmContact}</p>
       </td>
       <td>
-      <input onChange={e=>setValidCitiesState(e.currentTarget.value)}
+      <input onChange={e=>{setIsRowUpdatedState(true);setFormState(prevState=>{ return {...prevState,validCitiesState:e.target.value};})}}
           type="text"
           id="valid_cities"
           name="validCities"
-          value={validCitiesState}
+          value={formState.validCitiesState}
         />
       </td>
     </tr>
