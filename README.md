@@ -8,4 +8,4 @@ ie.    <input
 
 
 dom elemanına html attribute atmak istersen hep küçük harfli olmalı atribute ismi
- ie     <tr discountid={a}> olmalı     <tr discountId={a}> işe yaramaz gelmez attirbute. a undefined ise yine attribute gelmez. discountid="" de olmaz.
+ ie     <tr discountid={a.toString(}> olmalı     <tr discountId={a.toString()}> işe yaramaz gelmez attirbute. a undefined ise yine attribute gelmez. discountid="" de olmaz. toString() demezsen a booleanse mesela olmuyo ama a intse oluyo
