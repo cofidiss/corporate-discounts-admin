@@ -19,8 +19,8 @@ const [formState,setFormState] = useState({discountInfoState:currentAdminDiscoun
       <td>
         <input onChange={e=> {setIsRowUpdatedState(true); setFormState(prevState=>{ return {...prevState,discountInfoState:e.target.value};});}}
           type="text"
-          id="discount_description"
-          name="discountDescription"
+          id="discount_info"
+          name="discountInfo"
           value={formState.discountInfoState}
         />
       </td>

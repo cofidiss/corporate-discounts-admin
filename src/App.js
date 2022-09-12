@@ -70,9 +70,9 @@ let renderedElement;
     }
   return (
     <div >
-  <AdminDiscountTable corporateDiscounts={discountsArrState}  discountScopeLov={discountScopeLovState}/>
+  <AdminDiscountTable baseUrl={baseUrl} corporateDiscounts={discountsArrState}  discountScopeLov={discountScopeLovState}/>
     </div>
   );
 }
-
+  
 export default App;
