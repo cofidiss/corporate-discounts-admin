@@ -9,8 +9,8 @@ function AdminDiscountTableRow(props) {
 const [formState,setFormState] = useState({discountInfoState:currentAdminDiscountRow.discountInfo,
   validCitiesState:currentAdminDiscountRow.validCities,discountScopeId:currentAdminDiscountRow.discountScopeId});
 
- 
-
+   
+   
   return (
     <tr discountid={currentAdminDiscountRow.discountId} isrowupdated={isRowUpdatedState.toString()}>
       <td>
@@ -19,8 +19,8 @@ const [formState,setFormState] = useState({discountInfoState:currentAdminDiscoun
       <td>
         <input onChange={e=> {setIsRowUpdatedState(true); setFormState(prevState=>{ return {...prevState,discountInfoState:e.target.value};});}}
           type="text"
-          id="discount_info"
-          name="discountInfo"
+          id="discount_description"
+          name="discountDescription"
           value={formState.discountInfoState}
         />
       </td>
