@@ -4,12 +4,13 @@ import React, {useState} from 'react';
 
 function App() {
   const baseUrl="http://localhost:5103";
-  const [discountScopeLovState,setDiscountScopeLovState] = useState(null);
+  const [discountScopeLovState,setDiscountScopeLov] = useState(null);
 
-  const [discountsArrState, setDiscountsArrState] = useState(null);
+  const [discountsArrState, setDiscountsArr] = useState(null);
   const [isInitRunState, setIsInitRun] = useState(false);
   const [initHasErrorState, setInitHasError] = useState(false);
-
+  const [firmSelectLovState, setFirmSelectLov] = useState(null);
+  
 
   function InitPage(){
 
@@ -42,12 +43,28 @@ function App() {
       
          return response.json(); 
         });
-    
+        const getFirmSelectLov =  fetch(baseUrl + '/FirmSelectLov',{
+          method: 'POST', // or 'PUT'
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(),
+        })
+          .then((response) =>{
+            if (response.status !== 200){
+              throw new Error(`HTTP error! Status: ${response.status}`);
+        
+            }
+        
+           return response.json(); 
+          } );
        
-      Promise.all([getAllDiscountsPromise,getDiscountScopeLovPromise]).then(results=> {
+      Promise.all([getAllDiscountsPromise,getDiscountScopeLovPromise,getFirmSelectLov]).then(results=> {
         console.log(results);
-        setDiscountScopeLovState(results[1]);
-        setDiscountsArrState(results[0]);
+        setDiscountScopeLov(results[1]);
+        setDiscountsArr(results[0]);
+        setFirmSelectLov(results[2]);
+
         setInitHasError(false);
     
    
@@ -70,7 +87,7 @@ let renderedElement;
     }
   return (
     <div >
-  <AdminDiscountTable baseUrl={baseUrl} corporateDiscounts={discountsArrState}  discountScopeLov={discountScopeLovState}/>
+  <AdminDiscountTable baseUrl={baseUrl} firmLov={firmSelectLovState} corporateDiscounts={discountsArrState}  discountScopeLov={discountScopeLovState}/>
     </div>
   );
 }

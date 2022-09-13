@@ -5,19 +5,19 @@ function AdminDiscountTableRow(props) {
   const currentAdminDiscountRow = props.currentAdminDiscountRow;
   const discountScopeLov = props.discountScopeLov;
 
-  const [isRowUpdatedState,setIsRowUpdatedState] = useState(false);
+  const [rowState,setRowState] = useState("unchanged");
 const [formState,setFormState] = useState({discountInfoState:currentAdminDiscountRow.discountInfo,
   validCitiesState:currentAdminDiscountRow.validCities,discountScopeId:currentAdminDiscountRow.discountScopeId});
 
    
    
   return (
-    <tr discountid={currentAdminDiscountRow.discountId} isrowupdated={isRowUpdatedState.toString()}>
+    <tr discountid={currentAdminDiscountRow.discountId} style={{display:rowState === "deleted" ? "none" : "default"}} rowState={rowState.toString()}>
       <td>
         <p>{currentAdminDiscountRow.firmName}</p>
       </td>
       <td>
-        <input onChange={e=> {setIsRowUpdatedState(true); setFormState(prevState=>{ return {...prevState,discountInfoState:e.target.value};});}}
+        <input onChange={e=> {setRowState("updated"); setFormState(prevState=>{ return {...prevState,discountInfoState:e.target.value};});}}
           type="text"
           id="discount_description"
           name="discountDescription"
@@ -25,7 +25,7 @@ const [formState,setFormState] = useState({discountInfoState:currentAdminDiscoun
         />
       </td>
       <td>
-        <select id="discount_scope" name="discountScope" onChange={e =>{setIsRowUpdatedState(true); setFormState(prevState => {return {...formState,discountScopeId:e.target.value}; }
+        <select id="discount_scope" name="discountScope" onChange={e =>{setRowState("updated"); setFormState(prevState => {return {...formState,discountScopeId:e.target.value}; }
           
          )}}
         
@@ -40,15 +40,17 @@ const [formState,setFormState] = useState({discountInfoState:currentAdminDiscoun
         <p>{currentAdminDiscountRow.firmContact}</p>
       </td>
       <td>
-      <input onChange={e=>{setIsRowUpdatedState(true);setFormState(prevState=>{ return {...prevState,validCitiesState:e.target.value};})}}
+      <input onChange={e=>{setRowState("updated");setFormState(prevState=>{ return {...prevState,validCitiesState:e.target.value};})}}
           type="text"
           id="valid_cities"
           name="validCities"
           value={formState.validCitiesState}
         />
       </td>
+      <td><button onClick={e => {setRowState("deleted")}}>Sil</button></td>
     </tr>
   );
 }
 
 export default AdminDiscountTableRow;
+  
