@@ -3,7 +3,7 @@ import PreLoader from  "../PreLoader/PreLoader";
 import MyModal from  "../MyModal/MyModal";
 
 function AdminInsertedDiscountRow(props){
- debugger;
+
 
   const discountScopeLov = props.discountScopeLov;
   const firmLov = props.firmLov;

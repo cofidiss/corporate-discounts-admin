@@ -6,7 +6,7 @@ import AdminInsertedDiscountRow from "../AdminInsertedDiscountRow/AdminInsertedD
 
 
 function AdminDiscountTable(props){
-  debugger;
+
    const baseUrl = props.baseUrl;
    const firmLov = props.firmLov;
    const corporateDiscounts=  props.corporateDiscounts;
@@ -31,7 +31,9 @@ const onSaveClick = e => {
    var trs = adminTable.querySelector("tbody").querySelectorAll("tr");
   
   let updatedRowArr =[];
-  
+  let insertedRowArr =[];
+  let deletedRowArr =[];
+
    trs.forEach(element => {
      if (element.getAttribute("rowState")==="updated"){
        let discountid =  element.getAttribute("discountid");
@@ -45,16 +47,42 @@ const onSaveClick = e => {
   updatedRowArr.push(updatedRow);
   
      }
+     if(element.getAttribute("rowState")==="inserted"){
+
+      let firmId=  element.querySelector("#firm_id").value;
+      let discount_info=  element.querySelector("#discount_description").value;
+      let valid_cities =  element.querySelector("#valid_cities").value;
+      let discount_scope =  element.querySelector("#discount_scope").value;
+      let insertedRow = {discountInfo:discount_info,validCities:valid_cities,
+        discountScopeId:discount_scope,firmId:firmId
+     };
+     insertedRowArr.push(insertedRow);
+     }
+
+     if(element.getAttribute("rowState")==="deleted"){    
+     deletedRowArr.push(element.getAttribute("discountid"));
+     }
   });
   console.log("updatedRowArr");
   console.log(updatedRowArr);
+
+  console.log("insertedRowArr");
+  console.log(insertedRowArr);
+
+  console.log("deletedRowArr");
+  console.log(deletedRowArr);
+
+
+
+
+
   
   const savePromise = fetch(baseUrl + '/SaveDiscounts',{
      method: 'POST', // or 'PUT'
      headers: {
        'Content-Type': 'application/json',
      },
-     body: JSON.stringify(updatedRowArr),
+     body: JSON.stringify({updatedDiscountRows:updatedRowArr,insertedDiscountRows:insertedRowArr,deletedDiscountRows:deletedRowArr}),
    })
      .then  ((response) =>{
        if (response.status !== 200){
