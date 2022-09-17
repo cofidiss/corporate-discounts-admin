@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 
 function MyModal(props) {
 
+  const [isOpenState,setOpenState] = useState(props.isOpen === false ? false:true);
 
   Modal.setAppElement('#root');
 
@@ -29,13 +30,13 @@ const customStyles = {
       <div>
              
         <Modal
-          isOpen={props.isOpen}
+          isOpen={isOpenState}
          
           style={customStyles}
           
         >
           
-          <button onClick={props.closeModal}>Kapat</button>
+          <button onClick={e=> setOpenState(false)}>Kapat</button>
          { props.children}
         </Modal>
       </div>

@@ -1,5 +1,5 @@
 import AdminDiscountTable from "./components/AdminDiscountTable/AdminDiscountTable";
-
+import AdminEditFirmTable from "./components/AdminEditFirmTable/AdminEditFirmTable";
 import React, {useState} from 'react';
 
 function App() {
@@ -88,6 +88,7 @@ let renderedElement;
   return (
     <div >
   <AdminDiscountTable baseUrl={baseUrl} firmLov={firmSelectLovState} corporateDiscounts={discountsArrState}  discountScopeLov={discountScopeLovState}/>
+    <AdminEditFirmTable  baseUrl={baseUrl} ></AdminEditFirmTable>
     </div>
   );
 }
