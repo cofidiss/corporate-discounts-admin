@@ -3,17 +3,26 @@ import React, {useState} from 'react';
 import PreLoader from  "../PreLoader/PreLoader";
 import MyModal from  "../MyModal/MyModal";
 import AdminEditFirmTableRow from '../AdminEditFirmTableRow/AdminEditFirmTableRow';
+import AdminInsertedFirmRow from "../AdminInsertedFirmRow/AdminInsertedFirmRow";
+
 
 function AdminEditFirmTable(props){
 
     const baseUrl = props.baseUrl;
    const firmArr =  props.firmArr;
    const [firmArrState,setfirmArr] = useState([]);
-
+   const [insertedRowKeyState,setInsertedRowKey] = useState(0);
 const [isInitRunState,setInitRun] = useState(false);
 const [isPreLoaderShownState,setIsPreLoaderShown] = useState(false);
 const [isInitHasErrorState,setInitHasError] = useState(false);
 const [isSaveHasErrorState,setSaveHasError] = useState(false);
+
+
+const onAddClick = e => {
+
+  setInsertedRowKey(prevState => (prevState+1));
+
+};
 
 const onSaveClick = e => { 
     setIsPreLoaderShown(true);
@@ -117,6 +126,12 @@ return (<PreLoader></PreLoader>);
 
 
  }
+
+ let insertedRowsElement=[];
+ for (let i=0;i<insertedRowKeyState;++i){
+
+  insertedRowsElement.push(<AdminInsertedFirmRow key={i+1}/>);
+ }
     return (
 
         <div>
@@ -138,13 +153,13 @@ return (<PreLoader></PreLoader>);
 
 <tbody>
 {firmArrState.map(e => <AdminEditFirmTableRow firmId={e.id} firmName={e.name} firmContact={e.contactInfo}></AdminEditFirmTableRow>)}
-
+{insertedRowsElement}
 </tbody>
 
 </table>
    <button onClick={onSaveClick}>Kaydet</button>
 
-   <button>ekle</button>
+   <button onClick={onAddClick}>ekle</button>
 
         </div>
 
