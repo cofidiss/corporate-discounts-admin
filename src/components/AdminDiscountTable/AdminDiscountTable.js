@@ -5,7 +5,7 @@ import Preloader from "../Preloader/Preloader";
 
 
 function AdminDiscountTable(props){
-const [discountsArrState,setDiscountsArr] = useState(props.);
+const [discountsArrState,setDiscountsArr] = useState(props.discountsArr);
 const discountsArr = props.discountsArr;
 const firmLov= props.firmLov;
 const discountScopeLov= props.discountScopeLov;

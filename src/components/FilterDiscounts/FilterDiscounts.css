@@ -1,0 +1,15 @@
+
+
+.form-element{
+
+margin: 0px 10px 10px 10px;
+float: left;
+
+}
+
+.clear-fix::after{
+
+content:"" ;
+clear: both;
+display: block;
+}
