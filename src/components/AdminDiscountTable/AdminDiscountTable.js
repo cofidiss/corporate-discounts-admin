@@ -5,73 +5,13 @@ import Preloader from "../Preloader/Preloader";
 
 
 function AdminDiscountTable(props){
-
+const [discountsArrState,setDiscountsArr] = useState(props.);
 const discountsArr = props.discountsArr;
-const baseUrl = props.baseUrl;
-const [firmLovState,setFirmLov] =   useState([]);
-const [readyToRenderState,setReadyToRender] =   useState(false);
-const [discountScopeLovState,setDiscountScopeLov] =   useState([]);
-const [discountCategoryLovState,setDiscountCategoryLov] =   useState([]);
-const [isInitCompletedState,setInitCompleted] = useState(false);
-const [isInitRunState,setInitRun] = useState(false);
-const [isPreloaderShownState,setPreloaderShown] = useState(true);
+const firmLov= props.firmLov;
+const discountScopeLov= props.discountScopeLov;
+const discountCategoryLov= props.discountCategoryLov;
+const [isPreloaderShownState,setPreloaderShown] = useState(false);
 
-function Init(){
-
-    const firmLovPromise =    fetch(`${baseUrl}/FirmLov`, {
-        method: 'POST', // or 'PUT'
-          })
-        .then((response) => {
-    if (!response.ok){
-    throw new Error(`hata meydana geldi: Status: ${response.status}`)
-    
-    }
-    return response.json(); })
-    
-    
-    const discountScopeLovPromise =    fetch(`${baseUrl}/DiscountScopeLov`, {
-    method: 'POST', // or 'PUT'
-      })
-    .then((response) => {
-    if (!response.ok){
-    throw new Error(`hata meydana geldi: Status: ${response.status}`)
-    
-    }
-    return response.json(); })
-    
-    
-    
-    const discountCategoryLovPromise =    fetch(`${baseUrl}/DiscountCategoryLov`, {
-    method: 'POST', // or 'PUT'
-      })
-    .then((response) => {
-    if (!response.ok){
-    throw new Error(`hata meydana geldi: Status: ${response.status}`)
-    
-    }
-    return response.json(); })
-    
-    Promise.all([firmLovPromise,discountCategoryLovPromise,discountScopeLovPromise]).then(x=>{
-    setFirmLov(x[0]);
-    setDiscountCategoryLov(x[1]);
-    setDiscountScopeLov(x[2]);
-    setInitCompleted(true);
-    
-    
-    },x=> {
-    
-      setInitCompleted(false);
-    }).finally(() => {
-    setPreloaderShown(false);
-    
-    })
-    
-}
-
-if (!isInitRunState){   
-    Init();
-    setInitRun(true);
-}
 
     return (<div>
 <h1> İndirim Düzenleme</h1>
@@ -93,7 +33,7 @@ if (!isInitRunState){
 </thead>
 <tbody>
 
-{discountsArr.map(discountFromDb => <AdminDiscountTableRow firmLov={firmLovState} discountCategoryLov={discountCategoryLovState}  discountScopeLov={discountScopeLovState}
+{discountsArr.map(discountFromDb => <AdminDiscountTableRow firmLov={firmLov} discountCategoryLov={discountCategoryLov}  discountScopeLov={discountScopeLov}
  discountFromDb={discountFromDb}
 
 ></AdminDiscountTableRow>)}
