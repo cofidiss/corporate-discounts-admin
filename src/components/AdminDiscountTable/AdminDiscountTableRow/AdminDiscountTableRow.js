@@ -9,9 +9,9 @@ function AdminDiscountTableRow(props) {
 
   const [formState, setForm] = useState({
     firmId: discountFromDb.firmId,
-    discountInfo: discountFromDb.discountInfo,
+    discountDescription: discountFromDb.discountDescription,
     discountScopeId: discountFromDb.discountScopeId,
-    discountCategoryId: discountFromDb.categoryId,
+    discountCategoryId: discountFromDb.discountCategoryId,
     firmContact:discountFromDb.firmContact
   });
 
@@ -29,18 +29,18 @@ function AdminDiscountTableRow(props) {
 
   const onFormChange = (e) => {
     if (e.target.getAttribute("name") === "firm.select") {
-let formContact ="";
-        for (let firm in firmLov){
-if(firm.id === e.target.value){
+  
+let firmContact ="firma kontak bulunamadı";
+let selectedFirmId =  parseInt(e.target.value);
+        for (let firm of firmLov){
+if(firm.id === selectedFirmId){
 
-    formContact= firm.firmContact;
+  firmContact= firm.contactInfo;
 
-}
-
-        }
+}       }
 
       setForm((prevState) => {
-        return { ...prevState, firmId: e.target.value,formContact:formContact };
+        return { ...prevState, firmId: selectedFirmId,firmContact:firmContact };
       });
     }
 
@@ -51,14 +51,16 @@ if(firm.id === e.target.value){
     }
 
     if (e.target.getAttribute("name") === "discountScope.select") {
+      let selectedDiscountScopeId =  parseInt(e.target.value);
       setForm((prevState) => {
-        return { ...prevState, discountScopeId: e.target.value };
+        return { ...prevState, discountScopeId: selectedDiscountScopeId };
       });
     }
 
     if (e.target.getAttribute("name") === "discountCategory.select") {
+      let selectedDiscountCategoryId =  parseInt(e.target.value);
       setForm((prevState) => {
-        return { ...prevState, discountCategoryId: e.target.value };
+        return { ...prevState, discountCategoryId: selectedDiscountCategoryId};
       });
     }
   };
@@ -73,8 +75,8 @@ if(firm.id === e.target.value){
         </select>
       </td>
       <td>
-        <input type="text" name="discount.info">
-          {formState.discountInfo}
+        <input type="text" name="discount.info" value={formState.discountDescription}>
+      
         </input>
       </td>
       <td>
@@ -99,7 +101,7 @@ if(firm.id === e.target.value){
         </select>
       </td>
       <td>
-        <p name="firm.contact">{formState.formContact}</p>
+        <p name="firm.contact">{formState.firmContact}</p>  
       </td>
     </tr>
   );

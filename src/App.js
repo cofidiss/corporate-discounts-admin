@@ -14,6 +14,7 @@ function App() {
 const [discountCategoryLovState,setDiscountCategoryLov] =   useState([]);
 const [discountArrState,setDiscountArrState] =   useState([]);
 const [isInitRunState,setIsInitRun] = useState(false);
+const [keySignState,setKeySign] = useState(1);
 function Init(){
 
   const firmLovPromise =    fetch(`${baseUrl}/GetFirmLov`, {
@@ -77,8 +78,8 @@ if (!isInitRunState){
   return (
     <div>
 <Preloader isShown={isPreloaderShownState} ></Preloader>
-{initCompletedState ? <div>   <FilterDiscounts baseUrl={baseUrl} firmLov={firmLovState} discountScopeLov={discountScopeLovState}  discountCategoryLov={discountCategoryLovState} setDiscounts={setDiscountsArr}></FilterDiscounts>
-<AdminDiscountTable firmLov={firmLovState} discountScopeLov={discountScopeLovState} discountsArr={discountsArrState}
+{initCompletedState ? <div>   <FilterDiscounts baseUrl={baseUrl} firmLov={firmLovState} discountScopeLov={discountScopeLovState} setKeySign={setKeySign} keySignState={keySignState} discountCategoryLov={discountCategoryLovState} setDiscounts={setDiscountsArr}></FilterDiscounts>
+<AdminDiscountTable firmLov={firmLovState} discountScopeLov={discountScopeLovState} discountsArr={discountsArrState} keySign={keySignState}
       discountCategoryLov = {discountCategoryLovState} 
       baseUrl={baseUrl}></AdminDiscountTable> </div>:null }
       

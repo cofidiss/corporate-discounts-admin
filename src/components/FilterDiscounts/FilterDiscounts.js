@@ -4,9 +4,9 @@ import MyModal from "../MyModal/MyModal";
 import  "./FilterDiscounts.css";
 
 function FilterDiscounts(props){
-
+const keySign = props.keySignState;
   const setDiscounts = props.setDiscounts;
-
+  const setKeySign = props.setKeySign;
 console.log("FilterDiscounts rendered");
   const baseUrl = props.baseUrl;
   const formInitialValue = {firmId:-1,discountCategoryId:-1,discountScopeId:-1};
@@ -40,7 +40,7 @@ throw new Error(`hata meydana geldi: Status: ${response.status}`)
 
 }
 return response.json(); });
-searchPromise.then(x => setDiscounts(x)).catch(x => setModal({isOpen:true,content:"hata oldu tekrar deneyiniz"})).finally(x => setPreloaderShown(false))
+searchPromise.then(x => {setDiscounts(x);setKeySign(-1*keySign)}).catch(x => setModal({isOpen:true,content:"hata oldu tekrar deneyiniz"})).finally(x => setPreloaderShown(false))
   
 
 };
@@ -72,7 +72,7 @@ if (  e.target.getAttribute("id") === "discountScopeSelect"){
 useEffect(() => {console.log("FilterDiscounts effect");
  var filterDiscountsDiv =  document.getElementById("filterDiscounts");
  var optionElements = filterDiscountsDiv.getElementsByTagName("option");
- debugger;
+
  for (let option of optionElements) {
     if (option.getAttribute("class") === "level-2") {
 

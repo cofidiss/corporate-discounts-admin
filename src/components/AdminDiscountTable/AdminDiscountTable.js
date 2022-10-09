@@ -5,7 +5,7 @@ import Preloader from "../Preloader/Preloader";
 
 
 function AdminDiscountTable(props){
-const [discountsArrState,setDiscountsArr] = useState(props.discountsArr);
+const keySign = props.keySign;
 const discountsArr = props.discountsArr;
 const firmLov= props.firmLov;
 const discountScopeLov= props.discountScopeLov;
@@ -33,7 +33,7 @@ const [isPreloaderShownState,setPreloaderShown] = useState(false);
 </thead>
 <tbody>
 
-{discountsArr.map(discountFromDb => <AdminDiscountTableRow firmLov={firmLov} discountCategoryLov={discountCategoryLov}  discountScopeLov={discountScopeLov}
+{discountsArr.map(discountFromDb => <AdminDiscountTableRow firmLov={firmLov} key={keySign*discountFromDb.id} discountCategoryLov={discountCategoryLov}  discountScopeLov={discountScopeLov}
  discountFromDb={discountFromDb}
 
 ></AdminDiscountTableRow>)}
