@@ -3,6 +3,8 @@ import React, {useState} from 'react';
 import AdminDiscountTable from "./components/AdminDiscountTable/AdminDiscountTable";
 import Preloader from './components/Preloader/Preloader';
 import FilterDiscounts from './components/FilterDiscounts/FilterDiscounts';
+import MyModal from './components/MyModal/MyModal';
+
 
 function App() {
   const baseUrl = "http://localhost:5103/api/CorporateDiscountsAdmin";
@@ -14,7 +16,7 @@ function App() {
 const [discountCategoryLovState,setDiscountCategoryLov] =   useState([]);
 const [discountArrState,setDiscountArrState] =   useState([]);
 const [isInitRunState,setIsInitRun] = useState(false);
-const [keySignState,setKeySign] = useState(1);
+const [myModalState,setMyModalState] = useState({isOpen:false,content:(null)});
 function Init(){
 
   const firmLovPromise =    fetch(`${baseUrl}/GetFirmLov`, {
@@ -77,11 +79,13 @@ if (!isInitRunState){
   
   return (
     <div>
+      
+      <MyModal closeModal={ e => {setMyModalState({isOpen:false,content:(null)})}} isOpen={myModalState.isOpen}>{myModalState.content}</MyModal>
 <Preloader isShown={isPreloaderShownState} ></Preloader>
-{initCompletedState ? <div>   <FilterDiscounts baseUrl={baseUrl} firmLov={firmLovState} discountScopeLov={discountScopeLovState} setKeySign={setKeySign} keySignState={keySignState} discountCategoryLov={discountCategoryLovState} setDiscounts={setDiscountsArr}></FilterDiscounts>
-<AdminDiscountTable firmLov={firmLovState} discountScopeLov={discountScopeLovState} discountsArr={discountsArrState} keySign={keySignState}
+{initCompletedState ? <div>  <FilterDiscounts baseUrl={baseUrl} firmLov={firmLovState} discountScopeLov={discountScopeLovState}  discountCategoryLov={discountCategoryLovState} setDiscounts={setDiscountsArr}></FilterDiscounts>
+<AdminDiscountTable baseUrl={baseUrl} setPreloaderShown={setPreloaderShown} firmLov={firmLovState} discountScopeLov={discountScopeLovState} discountsArr={discountsArrState} setMyModal={setMyModalState}
       discountCategoryLov = {discountCategoryLovState} 
-      baseUrl={baseUrl}></AdminDiscountTable> </div>:null }
+     ></AdminDiscountTable> </div>:null }
       
     </div>
   );

@@ -34,7 +34,7 @@ const customStyles = {
           style={customStyles}
           
         ><div>  <button onClick={props.closeModal} style={{float:"right",marginBottom:"10px"}}>Kapat</button>
-<div style={{clear:"both"}}>   { props.children} </div>
+<div style={{clear:"both"}} className="clearfix">   { props.children} </div>
         
        </div>
           

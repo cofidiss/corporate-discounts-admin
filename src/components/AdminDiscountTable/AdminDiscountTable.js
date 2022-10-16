@@ -1,22 +1,23 @@
 import AdminDiscountTableRow from "./AdminDiscountTableRow/AdminDiscountTableRow";
 import { useEffect,useState } from "react";
-import Preloader from "../Preloader/Preloader";
+
 
 
 
 function AdminDiscountTable(props){
-const keySign = props.keySign;
+const setPreloaderShown = props.setPreloaderShown;
+const setMyModal = props.setMyModal;
+const baseUrl = props.baseUrl;
 const discountsArr = props.discountsArr;
 const firmLov= props.firmLov;
 const discountScopeLov= props.discountScopeLov;
 const discountCategoryLov= props.discountCategoryLov;
-const [isPreloaderShownState,setPreloaderShown] = useState(false);
 
-
+ 
     return (<div>
-<h1> İndirim Düzenleme</h1>
+<h1 style={{textAlign:'center'}}> İndirim Düzenleme</h1>
 
-<table>
+<table style={{textAlign:'center',width:"100%"}}>
 <thead>
 <tr> 
 <th> Firma Adı</th>
@@ -27,13 +28,15 @@ const [isPreloaderShownState,setPreloaderShown] = useState(false);
 
 <th>firma kontak</th>
 
+<th> Güncelle</th>
 
+<th>Sil</th>
 </tr>
 
 </thead>
 <tbody>
 
-{discountsArr.map(discountFromDb => <AdminDiscountTableRow firmLov={firmLov} key={keySign*discountFromDb.id} discountCategoryLov={discountCategoryLov}  discountScopeLov={discountScopeLov}
+{discountsArr.map(discountFromDb => <AdminDiscountTableRow baseUrl={baseUrl} setMyModal={setMyModal} setPreloaderShown={setPreloaderShown}  firmLov={firmLov}  discountCategoryLov={discountCategoryLov}  discountScopeLov={discountScopeLov}
  discountFromDb={discountFromDb}
 
 ></AdminDiscountTableRow>)}
