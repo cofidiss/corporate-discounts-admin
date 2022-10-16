@@ -18,3 +18,8 @@ desen js de a bir obje olur.
 a = {prop1:1,prop2 : MyComponent> saa</MyComponent>} olmuyo 
 a.prop2 = MyComponent> saa</MyComponent> diyebilrisin. veya 
 a = {prop1:1,prop2 : (MyComponent> saa</MyComponent>)} olabilri
+identifierlar, component tutarken sadece componentın propları ve nerde tanımlandığı bilgisini tutarlar. render edilmiş halleri olmaz.
+return edilen yerde identifiera atanmış html/jsx component dönmek return edilen yere o html/jsx elemnetini yazmakla aynı şeydir. 
+
+   <MyModal>{myModalState.content}</MyModal> bu durumda myModalState.content props ile verilmiş parametre gibi olur  MyModal için hep yeni oluşturulur. diffing algoritmasına tabi değildir.
+   
