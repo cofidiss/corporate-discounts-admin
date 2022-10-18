@@ -1,5 +1,6 @@
 import AdminDiscountTableRow from "./AdminDiscountTableRow/AdminDiscountTableRow";
 import { useEffect,useState } from "react";
+import AddDiscount from "../AddDiscount/AddDiscount";
 
 
 
@@ -12,8 +13,24 @@ const discountsArr = props.discountsArr;
 const firmLov= props.firmLov;
 const discountScopeLov= props.discountScopeLov;
 const discountCategoryLov= props.discountCategoryLov;
-
  
+ const onAddDiscount= e => {
+const modalContent = (<AddDiscount   setMyModal={setMyModal}
+    setPreloaderShown={setPreloaderShown}
+    baseUrl={baseUrl}
+    firmLov={firmLov}
+    discountCategoryLov={discountCategoryLov}
+    discountScopeLov={discountScopeLov}
+    />);
+
+    setMyModal ({isOpen:true,content:modalContent});
+
+
+
+
+
+
+ };
     return (<div>
 <h1 style={{textAlign:'center'}}> İndirim Düzenleme</h1>
 
@@ -43,7 +60,7 @@ const discountCategoryLov= props.discountCategoryLov;
 
 </tbody>
 </table>
-
+<button onClick={onAddDiscount} >İndirim Ekle</button>
     </div>);
 
 }

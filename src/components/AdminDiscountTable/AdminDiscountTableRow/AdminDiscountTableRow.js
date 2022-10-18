@@ -1,59 +1,68 @@
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import DiscountUpdateForm from "../../DiscountUpdateForm/DiscountUpdateForm";
-
+import DiscountDelete from "../../DiscountDelete/DiscountDelete";
 
 function AdminDiscountTableRow(props) {
-const  baseUrl=props.baseUrl;
-  const firmLov= props.firmLov;
-  const discountScopeLov= props.discountScopeLov;
-  const discountCategoryLov= props.discountCategoryLov;
+  const baseUrl = props.baseUrl;
+  const firmLov = props.firmLov;
+  const discountScopeLov = props.discountScopeLov;
+  const discountCategoryLov = props.discountCategoryLov;
 
   const setPreloaderShown = props.setPreloaderShown;
   const setMyModal = props.setMyModal;
-  const discountFromDb = props.discountFromDb;  
-const rowId= props.id;
+  const discountFromDb = props.discountFromDb;
+  const rowId = props.id;
 
-const onUpdateClick = e => {setPreloaderShown(true);
-  debugger;
-  const modalContent = (<DiscountUpdateForm setMyModal={setMyModal} setPreloaderShown={setPreloaderShown} baseUrl={baseUrl} firmLov={firmLov} 
-     discountCategoryLov={discountCategoryLov}  discountScopeLov={discountScopeLov} discountFromDb={discountFromDb}/>);
-  setMyModal({isOpen:true,content:modalContent});
-  setPreloaderShown(false);
-};
+  const onUpdateClick = (e) => {
+    setPreloaderShown(true);
+    debugger;
+    const modalContent = (
+      <DiscountUpdateForm
+        setMyModal={setMyModal}
+        setPreloaderShown={setPreloaderShown}
+        baseUrl={baseUrl}
+        firmLov={firmLov}
+        discountCategoryLov={discountCategoryLov}
+        discountScopeLov={discountScopeLov}
+        discountFromDb={discountFromDb}
+      />
+    );
+    setMyModal({ isOpen: true, content: modalContent });
+    setPreloaderShown(false);
+  };
 
+  const onDeleteClick = (e) => {
+    const modalContent = (<DiscountDelete setPreloaderShown={setPreloaderShown} setMyModal={setMyModal} baseUrl={baseUrl} discountFromDb={discountFromDb}/>);
+    setMyModal({isOpen:true,content:modalContent});};
 
-const onDeleteClick = e => {};
 
 
   return (
-    <tr >
+    <tr>
       <td>
-        <p> 
-        {discountFromDb.firmName}
+        <p>{discountFromDb.firmName}</p>
+      </td>
+      <td>
+        <p>{discountFromDb.discountDescription}</p>
+      </td>
+      <td>
+        <p>{discountFromDb.discountScopeName}</p>
+      </td>
+      <td>
+        <p>{discountFromDb.discountCategoryName}</p>
+      </td>
+      <td>
+        <p>{discountFromDb.firmContact}</p>
+      </td>
+      <td>
+        <p>
+          <button onClick={onUpdateClick}>Güncelle</button>
         </p>
       </td>
       <td>
-      <p>
-        {discountFromDb.discountDescription}</p>
-      </td>
-      <td>
-      <p> 
-        {discountFromDb.discountScopeName}
+        <p>
+          <button onClick={onDeleteClick}>Sil</button>
         </p>
-      </td>
-      <td>
-      <p > 
-    {discountFromDb.discountCategoryName}
-        </p>
-      </td>
-      <td>
-        <p>{discountFromDb.firmContact}</p>  
-      </td>
-      <td>
-        <p><button onClick={onUpdateClick}>Güncelle</button></p>  
-      </td>
-      <td>
-        <p><button onClick={onDeleteClick}>Sil</button></p>  
       </td>
     </tr>
   );
