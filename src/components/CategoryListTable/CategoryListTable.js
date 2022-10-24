@@ -5,6 +5,7 @@ function CategoryListTable(props) {
     const setPreloaderShown = props.setPreloaderShown;
     const setMyModal = props.setMyModal;
 const categoryListFromDb = props.categoryListFromDb;
+const categoryLov = props.categoryLov;
 
   return (
     <div>
@@ -17,7 +18,7 @@ const categoryListFromDb = props.categoryListFromDb;
           </tr>
         </thead>
         <tbody>
-{categoryListFromDb.map(x=> {return (<CategoryListTableRow baseUrl={baseUrl}  setMyModal={setMyModal}
+{categoryListFromDb.map(x=> {return (<CategoryListTableRow baseUrl={baseUrl}  setMyModal={setMyModal}    categoryLov={categoryLov}
 setPreloaderShown={setPreloaderShown} categoryFromDb={x}/>);} )}
 
         </tbody>

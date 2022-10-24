@@ -123,6 +123,7 @@ function App() {
         baseUrl={baseUrl}
         setMyModal={setMyModal}
         setPreloaderShown={setPreloaderShown} categoryListFromDb={categoryListState}
+        categoryLov={discountCategoryLovState}
       />
         </div>
       ) : null}
