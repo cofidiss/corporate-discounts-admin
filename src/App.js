@@ -120,6 +120,7 @@ function App() {
             discountCategoryLov={discountCategoryLovState}
           ></AdminDiscountTable>
              <CategoryListTable
+            setIsInitRun={setIsInitRun}
         baseUrl={baseUrl}
         setMyModal={setMyModal}
         setPreloaderShown={setPreloaderShown} categoryListFromDb={categoryListState}

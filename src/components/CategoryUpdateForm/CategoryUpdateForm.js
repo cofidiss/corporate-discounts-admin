@@ -1,6 +1,7 @@
 
 import { useState,useEffect  } from "react";
 function CategoryUpdateForm(props){
+ const   setIsInitRun=props.setIsInitRun;
 const baseUrl = props.baseUrl;
 const setPreloaderShown = props.setPreloaderShown;
 const setMyModal = props.setMyModal;
@@ -40,7 +41,8 @@ const onUpdate = e => {
     }
     return response.text(); });
 
-    updatePromise.then(x =>{
+    updatePromise.then(x =>{        
+ 
 const modalContent = (<span>{x}</span>);
 
 setMyModal({isOpen:true,content:modalContent});
@@ -49,7 +51,7 @@ setMyModal({isOpen:true,content:modalContent});
         debugger;
         const modalContent = (<span>{x}</span>);
         setMyModal({isOpen:true,content:modalContent});
-    }).finally( () => setPreloaderShown(false));
+    }).finally( () => setPreloaderShown(false));   
 }
 
     return (<div >
@@ -57,7 +59,7 @@ setMyModal({isOpen:true,content:modalContent});
         <input onChange={onFormChange} type="text" id="categoryName" value={formState.categoryName} />
         <label>Parent Kategori Adı</label>
         <select  onChange={onFormChange} id="parentCategoryName" value={formState.parentCategoryId}>
-        <option value={null}></option>
+        <option value={""}></option>
 {
 categoryLov.map(x=> {if (categoryFromDb.id !== x.id){
 return (<option value={x.id}>{x.name}</option>);
@@ -68,6 +70,7 @@ return (<option value={x.id}>{x.name}</option>);
         </select>
        
         <button onClick={onUpdate}>Güncelle</button>
+
     </div>);
 
 }
