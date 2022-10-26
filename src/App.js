@@ -4,7 +4,7 @@ import Preloader from "./components/Preloader/Preloader";
 import FilterDiscounts from "./components/FilterDiscounts/FilterDiscounts";
 import MyModal from "./components/MyModal/MyModal";
 import CategoryListTable from "./components/CategoryListTable/CategoryListTable";
-
+import FirmListTable from "./components/FirmListTable/FirmListTable";
 function App() {
   const baseUrl = "http://localhost:5103/api/CorporateDiscountsAdmin";
   const [isPreloaderShownState, setPreloaderShown] = useState(true);
@@ -15,6 +15,7 @@ function App() {
   const [discountCategoryLovState, setDiscountCategoryLov] = useState([]);
   const [categoryListState, setCategoryList] = useState([]);  
   const [discountArrState, setDiscountArrState] = useState([]);
+  const [firmArrState, setFirmArr] = useState([]);
   const [isInitRunState, setIsInitRun] = useState(false);
   const [myModalState, setMyModal] = useState({
     isOpen: false,
@@ -61,11 +62,23 @@ function App() {
       }
       return response.json();
     });
+    const firmListFromDbPromise = fetch(
+      `${baseUrl}/GetFirms`,
+      {
+        method: "POST", // or 'PUT'
+      }
+    ).then((response) => {
+      if (!response.ok) {
+        throw new Error(`hata meydana geldi: Status: ${response.status}`);
+      }
+      return response.json();
+    });
     
     Promise.all([
       firmLovPromise,
       discountCategoryLovPromise,
-      discountScopeLovPromise,categoryListFromDbPromise
+      discountScopeLovPromise,categoryListFromDbPromise,
+      firmListFromDbPromise
     ])
       .then(
         (x) => {
@@ -73,6 +86,7 @@ function App() {
           setDiscountCategoryLov(x[1]);
           setDiscountScopeLov(x[2]);
           setCategoryList(x[3]);
+          setFirmArr(x[4]);
           setInitCompleted(true);
         },
         (x) => {
@@ -126,6 +140,9 @@ function App() {
         setPreloaderShown={setPreloaderShown} categoryListFromDb={categoryListState}
         categoryLov={discountCategoryLovState}
       />
+      <FirmListTable   baseUrl={baseUrl}
+        setMyModal={setMyModal}
+        setPreloaderShown={setPreloaderShown} firmListFromDb={firmArrState}/>
         </div>
       ) : null}
    
