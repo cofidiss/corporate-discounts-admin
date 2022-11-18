@@ -1,6 +1,9 @@
 import CategoryUpdateForm from "../../CategoryUpdateForm/CategoryUpdateForm";
 
 function CategoryListTableRow(props) {
+  const setDiscountCategoryLov = props.setDiscountCategoryLov;
+  const getDiscountCategoryLov = props.getDiscountCategoryLov;
+
   const   setIsInitRun=props.setIsInitRun;
   const baseUrl = props.baseUrl;
   const setPreloaderShown = props.setPreloaderShown;
@@ -11,6 +14,8 @@ function CategoryListTableRow(props) {
   const onUpdate = (e) => {
     const modalContent = (
       <CategoryUpdateForm
+      getDiscountCategoryLov = {getDiscountCategoryLov} 
+        setDiscountCategoryLov={setDiscountCategoryLov}
       setIsInitRun={setIsInitRun}
         setMyModal={setMyModal}
         setPreloaderShown={setPreloaderShown}
@@ -23,7 +28,7 @@ function CategoryListTableRow(props) {
 
   };
 const onDelete = e => {
-  const updatePromise =    fetch(`${baseUrl}/DeleteCategory`, {
+  const deletePromise =    fetch(`${baseUrl}/DeleteCategory`, {
     method: 'POST', // or 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -37,7 +42,7 @@ return response.text().then(x =>  Promise.reject(x));
 }
 return response.text(); });
 
-updatePromise.then(x =>{        
+deletePromise.then(x =>{        
 
 const modalContent = (<span>{x}</span>);
 
@@ -47,7 +52,11 @@ setMyModal({isOpen:true,content:modalContent});
     debugger;
     const modalContent = (<span>{x}</span>);
     setMyModal({isOpen:true,content:modalContent});
-}).finally( () => setPreloaderShown(false));   
+}).then(() => {return getDiscountCategoryLov();},() => {return getDiscountCategoryLov();}).
+then(x=>setDiscountCategoryLov(x)).catch(x=> {
+  const modalContent = (<span>{"Categorylovsi çekilemedi"}</span>);
+  
+  setMyModal({isOpen:true,content:modalContent});}).finally( () => setPreloaderShown(false));   
 
 
 }
