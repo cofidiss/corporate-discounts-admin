@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 function FirmAddForm(props) {
-
+const   setInitTried= props.setInitTried;
   const baseUrl = props.baseUrl;
   const setPreloaderShown = props.setPreloaderShown;
   const setMyModal = props.setMyModal;
@@ -42,7 +42,7 @@ function FirmAddForm(props) {
         setMyModal({ isOpen: true, content: x });
       })
       .catch((x) => setMyModal({ isOpen: true, content: x }))
-      .finally(() => setPreloaderShown(false));
+      .finally(() => {setPreloaderShown(false);setInitTried(false);});
   };
 
   return (

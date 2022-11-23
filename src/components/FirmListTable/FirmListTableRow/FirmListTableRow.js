@@ -1,6 +1,7 @@
 import FirmUpdateForm from "../../FirmUpdateForm/FirmUpdateForm";
 
 function FirmListTableRow(props) {
+  const setInitTried = props.setInitTried;
   const firmFromDb = props.firmFromDb;
   const baseUrl = props.baseUrl;
   const setPreloaderShown = props.setPreloaderShown;
@@ -24,13 +25,14 @@ const onDelete = e => {
         setMyModal({ isOpen: true, content: x });
       })
       .catch((x) => setMyModal({ isOpen: true, content: x }))
-      .finally(() => setPreloaderShown(false));
+      .finally(() => {setPreloaderShown(false);setInitTried(false);});
 
 }
 
   const onUpdate = (e) => {
     const modalContent = (
       <FirmUpdateForm
+      setInitTried={setInitTried}
          setMyModal={setMyModal}
         setPreloaderShown={setPreloaderShown}
         baseUrl={baseUrl}

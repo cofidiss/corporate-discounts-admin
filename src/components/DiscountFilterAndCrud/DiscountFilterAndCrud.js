@@ -7,18 +7,19 @@ function DiscountFilterAndCrud(props){
   console.log("DiscountFilterAndCrud rendred");
   debugger;
   const baseUrl = props.baseUrl;
-
   const setPreloaderShown = props.setPreloaderShown;
   const setMyModal = props.setMyModal;
-  const [initCompletedState, setInitCompleted] = useState(false);
+  const [initTriedState, setInitTried] = useState(false);
+  const [initSuccesfullState, setInitSuccesfull] = useState(false);
   const [discountsArrState, setDiscountsArr] = useState([]);
   const [firmLovState, setFirmLov] = useState([]);
   const [discountScopeLovState, setDiscountScopeLov] = useState([]);
   const [discountCategoryLovState, setDiscountCategoryLov] = useState([]);
- if (initCompletedState== false){
+ if (initTriedState== false){
   Init();
  }
   function Init(){
+    setInitTried(true);
     setPreloaderShown(true);
     
     const firmLovPromise = fetch(`${baseUrl}/GetFirmLov`, {
@@ -58,24 +59,23 @@ function DiscountFilterAndCrud(props){
       ])
         .then(
           (x) => {
-            setInitCompleted(true);
+       
             setFirmLov(x[0]);
             setDiscountCategoryLov(x[1]);
             setDiscountScopeLov(x[2]);
+            setInitSuccesfull(true);
       
-          },
-          (x) => {
-            setInitCompleted(false);
-          }
-        )
-        .finally(() => {
+          }).catch (x => { setInitSuccesfull(false); const modalContent = (<div><p>İndirim Düzenleme Ekranı yüklenemedi</p></div>);
+          setMyModal({isOpen:true,content:modalContent});
+          })
+               .finally(() => {
           setPreloaderShown(false);
         });
 
   }
  
 
-    return (<div> {initCompletedState ?  <div> <FilterDiscounts
+    return (<div> {initSuccesfullState ?  <div> <FilterDiscounts
       baseUrl={baseUrl}
             firmLov={firmLovState}
             discountScopeLov={discountScopeLovState}

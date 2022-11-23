@@ -1,10 +1,7 @@
 
 import { useState,useEffect  } from "react";
 function CategoryUpdateForm(props){
-    const setDiscountCategoryLov = props.setDiscountCategoryLov;
-    const getDiscountCategoryLov = props.getDiscountCategoryLov;
-  
- const   setIsInitRun=props.setIsInitRun;
+    const setInitTried = props.setInitTried;
 const baseUrl = props.baseUrl;
 const setPreloaderShown = props.setPreloaderShown;
 const setMyModal = props.setMyModal;
@@ -54,14 +51,7 @@ setMyModal({isOpen:true,content:modalContent});
         debugger;
         const modalContent = (<span>{x}</span>);
         setMyModal({isOpen:true,content:modalContent});
-    }).then(() => {return getDiscountCategoryLov();},() => {return getDiscountCategoryLov();}).
-    then(x=>{
-        setDiscountCategoryLov(x); 
-        debugger; 
-        return null;}).catch(x=> {debugger;
-      const modalContent = (<span>{"Categorylovsi çekilemedi"}</span>);
-      
-      setMyModal({isOpen:true,content:modalContent});}).finally( () => setPreloaderShown(false));   
+    }).finally( () => {setPreloaderShown(false);setInitTried(false);});   
 }
 
     return (<div >

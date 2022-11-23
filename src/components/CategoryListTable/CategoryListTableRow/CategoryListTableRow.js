@@ -1,10 +1,7 @@
 import CategoryUpdateForm from "../../CategoryUpdateForm/CategoryUpdateForm";
 
 function CategoryListTableRow(props) {
-  const setDiscountCategoryLov = props.setDiscountCategoryLov;
-  const getDiscountCategoryLov = props.getDiscountCategoryLov;
-
-  const   setIsInitRun=props.setIsInitRun;
+const setInitTried = props.setInitTried;
   const baseUrl = props.baseUrl;
   const setPreloaderShown = props.setPreloaderShown;
   const setMyModal = props.setMyModal;
@@ -13,10 +10,8 @@ function CategoryListTableRow(props) {
   debugger;
   const onUpdate = (e) => {
     const modalContent = (
-      <CategoryUpdateForm
-      getDiscountCategoryLov = {getDiscountCategoryLov} 
-        setDiscountCategoryLov={setDiscountCategoryLov}
-      setIsInitRun={setIsInitRun}
+      <CategoryUpdateForm     
+      setInitTried={setInitTried}
         setMyModal={setMyModal}
         setPreloaderShown={setPreloaderShown}
         baseUrl={baseUrl} categoryFromDb={categoryFromDb}
@@ -51,12 +46,8 @@ setMyModal({isOpen:true,content:modalContent});
 }).catch(x=>{
     debugger;
     const modalContent = (<span>{x}</span>);
-    setMyModal({isOpen:true,content:modalContent});
-}).then(() => {return getDiscountCategoryLov();},() => {return getDiscountCategoryLov();}).
-then(x=>setDiscountCategoryLov(x)).catch(x=> {
-  const modalContent = (<span>{"Categorylovsi çekilemedi"}</span>);
-  
-  setMyModal({isOpen:true,content:modalContent});}).finally( () => setPreloaderShown(false));   
+    setMyModal({isOpen:true,content:modalContent});}
+).finally( () => {setPreloaderShown(false);setInitTried(false);});   
 
 
 }
