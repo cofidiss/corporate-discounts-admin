@@ -13,17 +13,40 @@ import {  BrowserRouter,  Routes,  Route,  Link,  useParam,  Outlet,} from "reac
 import DiscountFilterAndCrud from "./components/DiscountFilterAndCrud/DiscountFilterAndCrud";
 import CategoryListTable from "./components/CategoryListTable/CategoryListTable";
 import FirmListTable from "./components/FirmListTable/FirmListTable";
+import Login from  "./components/Login/Login";
 function AppTest(props) {
 
+
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdminAsked, setIsAdminAsked] = useState(false);
   const [isPreloaderShownState, setPreloaderShown] = useState(false);
   const baseUrl = "http://localhost:5103/api/CorporateDiscountsAdmin";
   const [myModalState, setMyModal] = useState({
     isOpen: false,
     content: null,
   });
+
+function IsAdmin(){
+  setIsAdminAsked(true);
+  const isAutharizePromise = fetch(`${baseUrl}/IsAdmin`, {
+    method: "POST", // or 'PUT'
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error(`hata meydana geldi: Status: ${response.status}`);
+    }
+    return response.json();
+  });
+
+  isAutharizePromise.then(x=> x ? setIsAdmin(true):  setIsAdmin(false))
+
+}
+if (isAdminAsked===false){
+  IsAdmin();
+
+}
+
   return (
-    <BrowserRouter>
-      <ProSidebarProvider>
+    <BrowserRouter>{isAdmin== true ? ( <ProSidebarProvider>
       <Preloader isShown={isPreloaderShownState}></Preloader>
         <MyModal
         closeModal={(e) => {
@@ -77,7 +100,19 @@ function AppTest(props) {
           </main>
         </div>
       
-      </ProSidebarProvider>
+      </ProSidebarProvider>):(         
+             
+              
+                  <Login
+                    baseUrl={baseUrl}
+                    setPreloaderShown={setPreloaderShown}
+                    setMyModal={setMyModal}                 
+                  />
+                
+           
+          
+           )}
+     
     </BrowserRouter>
   );
 }
