@@ -1,77 +1,66 @@
 import React, { useState } from "react";
 
 import Form from "react-bootstrap/Form";
-
+import { useNavigate,useParams } from 'react-router-dom'
 import Button from "react-bootstrap/Button";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-export default function Login() {
+export default function Login(props) {
+  debugger;
+  const setcurrentUserAsked = props.setcurrentUserAsked;
+  const currentUserState = props.currentUserState;
+const baseUrl = props.baseUrl;
+const setIsAdminAsked = props.setIsAdminAsked;
+  const [formState, setForm] = useState({userName:"",password:""});
+  let { prevPage } = useParams();
+  const  navigate = useNavigate(); // Read values passed on state
 
-  const [email, setEmail] = useState("");
+  const onFormChange = (e) => {
+    debugger;
+    if (e.target.getAttribute("name") === "userName") {
+      setForm((prevState) => {
+        return { ...prevState, userName: e.target.value };
+      });
+    }
+    if (e.target.getAttribute("name") === "password") {
+      setForm((prevState) => {
+        return { ...prevState, password: e.target.value };
+      });
+    }
+  };
 
-  const [password, setPassword] = useState("");
 
-  function validateForm() {
+const onLoginClick = (event) => {
 
-    return email.length > 0 && password.length > 0;
+  const loginPromise =    fetch(`${baseUrl}/Login`, {
+    method: 'POST', // or 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body:JSON.stringify(formState)
+      })
+    .then((response) => {
+if (!response.ok){
+return response.text().then(x =>  Promise.reject(x));
 
-  }
+}
+return response.text(); });
+loginPromise.then(x=>{navigate("/" + prevPage);setcurrentUserAsked(false);})
 
-  function handleSubmit(event) {
-
-    event.preventDefault();
-
-  }
+};
 
   return (
 
-    <div className="Login">
 
-      <Form onSubmit={handleSubmit}>
+    <div>
+ <label>username</label>
+      <input type="text" name="userName" value={formState.userName} onChange={onFormChange}/>
+      <label>password</label>
+      <input type="text" name="password" value={formState.password} onChange={onFormChange}/>
 
-        <Form.Group size="lg" controlId="email">
-
-          <Form.Label>Email</Form.Label>
-
-          <Form.Control
-
-            autoFocus
-
-            type="email"
-
-            value={email}
-
-            onChange={(e) => setEmail(e.target.value)}
-
-          />
-
-        </Form.Group>
-
-        <Form.Group size="lg" controlId="password">
-
-          <Form.Label>Password</Form.Label>
-
-          <Form.Control
-
-            type="password"
-
-            value={password}
-
-            onChange={(e) => setPassword(e.target.value)}
-
-          />
-
-        </Form.Group>
-
-        <Button block size="lg" type="submit" disabled={!validateForm()}>
-
-          Login
-
-        </Button>
-
-      </Form>
-
+      <button onClick={onLoginClick}>Giriş</button>
+     
     </div>
 
   );

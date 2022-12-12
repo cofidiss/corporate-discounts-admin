@@ -7,48 +7,63 @@ import FilterDiscounts from "./components/FilterDiscounts/FilterDiscounts";
 import AdminDiscountTable from "./components/AdminDiscountTable/AdminDiscountTable";
 import reportWebVitals from "./reportWebVitals";
 import MyModal from "./components/MyModal/MyModal";
-import {ProSidebarProvider,  Sidebar,
-  Menu,  MenuItem,  SubMenu,  useProSidebar,} from "react-pro-sidebar";
-import {  BrowserRouter,  Routes,  Route,  Link,  useParam,  Outlet,} from "react-router-dom";
+import {
+  ProSidebarProvider,
+  Sidebar,
+  Menu,
+  MenuItem,
+  SubMenu,
+  useProSidebar,
+} from "react-pro-sidebar";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+  useParam,
+  Outlet,
+  useNavigate,
+} from "react-router-dom";
 import DiscountFilterAndCrud from "./components/DiscountFilterAndCrud/DiscountFilterAndCrud";
 import CategoryListTable from "./components/CategoryListTable/CategoryListTable";
 import FirmListTable from "./components/FirmListTable/FirmListTable";
-import Login from  "./components/Login/Login";
+import Login from "./components/Login/Login";
+import TopBar from "./components/TopBar/TopBar";
+import ConditionalRoute from "./components/ConditionalRoute/ConditionalRoute";
 function AppTest(props) {
-
-
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isAdminAsked, setIsAdminAsked] = useState(false);
-  const [isPreloaderShownState, setPreloaderShown] = useState(false);
+  debugger;
+  const [a, b] = useState(Date.now());
+  const [isCurrentUserAskedState, setcurrentUserAsked] = useState(false);
+  const [currentUserState, setCurrentUser] = useState(null);
+  const [isPreloaderShownState, setPreloaderShown] = useState(true);
   const baseUrl = "http://localhost:5103/api/CorporateDiscountsAdmin";
   const [myModalState, setMyModal] = useState({
     isOpen: false,
     content: null,
   });
 
-function IsAdmin(){
-  setIsAdminAsked(true);
-  const isAutharizePromise = fetch(`${baseUrl}/IsAdmin`, {
-    method: "POST", // or 'PUT'
-  }).then((response) => {
-    if (!response.ok) {
-      throw new Error(`hata meydana geldi: Status: ${response.status}`);
-    }
-    return response.json();
-  });
+  function GetUserInfo() {
+    setcurrentUserAsked(true);
+    const getUserInfoPromise = fetch(`${baseUrl}/GetUserInfo`, {
+      method: "POST", // or 'PUT'
+    }).then((response) => {
+      if (!response.ok) {
+        throw new Error(`hata meydana geldi: Status: ${response.status}`);
+      }
+      return response.json();
+    });
+    getUserInfoPromise
+      .then((x) => setCurrentUser({ userName: x.userName, isAdmin: x.isAdmin }))
+      .finally(() => setPreloaderShown(false));
+  }
 
-  isAutharizePromise.then(x=> x ? setIsAdmin(true):  setIsAdmin(false))
-
-}
-if (isAdminAsked===false){
-  IsAdmin();
-
-}
-
+  if (isCurrentUserAskedState === false) {
+    GetUserInfo();
+  }
   return (
-    <BrowserRouter>{isAdmin== true ? ( <ProSidebarProvider>
+    <BrowserRouter>
       <Preloader isShown={isPreloaderShownState}></Preloader>
-        <MyModal
+      <MyModal
         closeModal={(e) => {
           setMyModal({ isOpen: false, content: null });
         }}
@@ -56,7 +71,64 @@ if (isAdminAsked===false){
       >
         {myModalState.content}
       </MyModal>
+
+      <Routes>
+        <Route
+          path="/login/:prevPage"
+          element={
+            <Login
+              baseUrl={baseUrl}
+              setPreloaderShown={setPreloaderShown}
+              setMyModal={setMyModal}
+              currentUserState={currentUserState}
+              setcurrentUserAsked = {setcurrentUserAsked}
+            />
+          }
+        ></Route>
+
+        <Route
+          path="/indirimdüzenle"
+          element={
+            <ConditionalRoute currentUserState={currentUserState}>
+              <DiscountFilterAndCrud
+                baseUrl={baseUrl}
+                setPreloaderShown={setPreloaderShown}
+                setMyModal={setMyModal}
+                currentUserState={currentUserState}
+              />
+            </ConditionalRoute>
+          }
+        ></Route>
+        <Route
+          path="/kategoriDuzenle"
+          element={
+            <ConditionalRoute currentUserState={currentUserState}>
+              <CategoryListTable
+                baseUrl={baseUrl}
+                setPreloaderShown={setPreloaderShown}
+                setMyModal={setMyModal}
+              />
+            </ConditionalRoute>
+          }
+        ></Route>
+        <Route
+          path="/firmaDuzenle"
+          element={
+            <ConditionalRoute currentUserState={currentUserState}>
+              <FirmListTable
+                baseUrl={baseUrl}
+                setPreloaderShown={setPreloaderShown}
+                setMyModal={setMyModal}
+              />
+            </ConditionalRoute>
+          }
+        ></Route>
+      </Routes>
+      {/* {(isAdminState=== true && currentUserState!== null) ? (<div>        <TopBar userName={currentUserState.userName}/> 
+    <ProSidebarProvider>
+
         <div style={{ display: "flex", height: "100%" }}>
+ 
           <Sidebar>
             <Menu>
               <MenuItem routerLink={<Link to="/indirimduzenle" />}>
@@ -100,19 +172,19 @@ if (isAdminAsked===false){
           </main>
         </div>
       
-      </ProSidebarProvider>):(         
+      </ProSidebarProvider></div>):(         
              
               
                   <Login
                     baseUrl={baseUrl}
                     setPreloaderShown={setPreloaderShown}
-                    setMyModal={setMyModal}                 
+                    setMyModal={setMyModal}            
+                    setIsAdminAsked =  {setIsAdminAsked}  
                   />
                 
            
           
-           )}
-     
+           )} */}
     </BrowserRouter>
   );
 }

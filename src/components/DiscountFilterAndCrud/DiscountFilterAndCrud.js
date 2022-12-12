@@ -2,10 +2,11 @@
 import FilterDiscounts from "../FilterDiscounts/FilterDiscounts";
 import AdminDiscountTable from "../AdminDiscountTable/AdminDiscountTable";
 import React, { useState } from "react";
-
+import {  BrowserRouter,  Routes,  Route,  Link,  useParam,  Outlet,useNavigate  } from "react-router-dom";
 function DiscountFilterAndCrud(props){
   console.log("DiscountFilterAndCrud rendred");
   debugger;
+  const currentUserState = props.currentUserState;
   const baseUrl = props.baseUrl;
   const setPreloaderShown = props.setPreloaderShown;
   const setMyModal = props.setMyModal;
@@ -15,6 +16,13 @@ function DiscountFilterAndCrud(props){
   const [firmLovState, setFirmLov] = useState([]);
   const [discountScopeLovState, setDiscountScopeLov] = useState([]);
   const [discountCategoryLovState, setDiscountCategoryLov] = useState([]);
+  
+   const navigate = useNavigate();
+    if (currentUserState === null || currentUserState.isAdmin=== false){
+  debugger;
+      navigate("/login");
+    }
+
  if (initTriedState== false){
   Init();
  }
