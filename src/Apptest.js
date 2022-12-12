@@ -71,7 +71,22 @@ function AppTest(props) {
       >
         {myModalState.content}
       </MyModal>
-
+      <ProSidebarProvider>
+      <Sidebar>
+            <Menu>
+              <MenuItem routerLink={<Link to="/indirimdüzenle" />}>
+                {" "}
+                indirim düzenleme
+              </MenuItem>
+              <MenuItem routerLink={<Link to="/kategoriDuzenle" />}>
+                {" "}
+                Kategörü düzenleme
+              </MenuItem>
+              <MenuItem routerLink={<Link to="/firmaDuzenle" />}>
+                Firma Düzenleme
+              </MenuItem>
+            </Menu>
+          </Sidebar> <main>
       <Routes>
         <Route
           path="/login/:prevPage"
@@ -123,7 +138,7 @@ function AppTest(props) {
             </ConditionalRoute>
           }
         ></Route>
-      </Routes>
+      </Routes></main></ProSidebarProvider>
       {/* {(isAdminState=== true && currentUserState!== null) ? (<div>        <TopBar userName={currentUserState.userName}/> 
     <ProSidebarProvider>
 
