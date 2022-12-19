@@ -1,6 +1,6 @@
 import { Children } from "react";
 import { Navigate ,useLocation} from 'react-router-dom'
-
+import TopBar from "../TopBar/TopBar";
 function ConditionalRoute(props){
 debugger;
 const currentUserState = props.currentUserState;
@@ -11,7 +11,8 @@ if(currentUserState === null){
     renderedElement = null;
 }
 if(currentUserState !== null && currentUserState.isAdmin === true){
-    renderedElement = children;
+ 
+    renderedElement = (<div>   <TopBar></TopBar>{children} </div>);
 }
 if(currentUserState !== null && currentUserState.isAdmin === false){
 

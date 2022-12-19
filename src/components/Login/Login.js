@@ -9,11 +9,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export default function Login(props) {
   debugger;
   const setcurrentUserAsked = props.setcurrentUserAsked;
-  const currentUserState = props.currentUserState;
+  const setCurrentUser = props.setCurrentUser;
+  setCurrentUser(null);
 const baseUrl = props.baseUrl;
 const setIsAdminAsked = props.setIsAdminAsked;
   const [formState, setForm] = useState({userName:"",password:""});
   let { prevPage } = useParams();
+  console.log("prevPage" + prevPage);
   const  navigate = useNavigate(); // Read values passed on state
 
   const onFormChange = (e) => {
@@ -46,7 +48,7 @@ return response.text().then(x =>  Promise.reject(x));
 
 }
 return response.text(); });
-loginPromise.then(x=>{navigate("/" + prevPage);setcurrentUserAsked(false);})
+loginPromise.then(x=>{navigate("/" + prevPage);debugger;setcurrentUserAsked(false);})
 
 };
 

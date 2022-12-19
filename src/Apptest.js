@@ -33,9 +33,10 @@ import ConditionalRoute from "./components/ConditionalRoute/ConditionalRoute";
 function AppTest(props) {
   debugger;
   const [a, b] = useState(Date.now());
+  console.log("a" +a);
   const [isCurrentUserAskedState, setcurrentUserAsked] = useState(false);
   const [currentUserState, setCurrentUser] = useState(null);
-  const [isPreloaderShownState, setPreloaderShown] = useState(true);
+  const [isPreloaderShownState, setPreloaderShown] = useState(false);
   const baseUrl = "http://localhost:5103/api/CorporateDiscountsAdmin";
   const [myModalState, setMyModal] = useState({
     isOpen: false,
@@ -44,6 +45,7 @@ function AppTest(props) {
 
   function GetUserInfo() {
     setcurrentUserAsked(true);
+    setPreloaderShown(true);
     const getUserInfoPromise = fetch(`${baseUrl}/GetUserInfo`, {
       method: "POST", // or 'PUT'
     }).then((response) => {
@@ -53,7 +55,7 @@ function AppTest(props) {
       return response.json();
     });
     getUserInfoPromise
-      .then((x) => setCurrentUser({ userName: x.userName, isAdmin: x.isAdmin }))
+      .then((x) => setCurrentUser({ userName: x.userName, isAdmin: x.isAdmin ,userId:x.userId}))
       .finally(() => setPreloaderShown(false));
   }
 
@@ -71,22 +73,8 @@ function AppTest(props) {
       >
         {myModalState.content}
       </MyModal>
-      <ProSidebarProvider>
-      <Sidebar>
-            <Menu>
-              <MenuItem routerLink={<Link to="/indirimdüzenle" />}>
-                {" "}
-                indirim düzenleme
-              </MenuItem>
-              <MenuItem routerLink={<Link to="/kategoriDuzenle" />}>
-                {" "}
-                Kategörü düzenleme
-              </MenuItem>
-              <MenuItem routerLink={<Link to="/firmaDuzenle" />}>
-                Firma Düzenleme
-              </MenuItem>
-            </Menu>
-          </Sidebar> <main>
+
+  
       <Routes>
         <Route
           path="/login/:prevPage"
@@ -95,7 +83,7 @@ function AppTest(props) {
               baseUrl={baseUrl}
               setPreloaderShown={setPreloaderShown}
               setMyModal={setMyModal}
-              currentUserState={currentUserState}
+              setCurrentUser={setCurrentUser}
               setcurrentUserAsked = {setcurrentUserAsked}
             />
           }
@@ -138,7 +126,7 @@ function AppTest(props) {
             </ConditionalRoute>
           }
         ></Route>
-      </Routes></main></ProSidebarProvider>
+      </Routes>
       {/* {(isAdminState=== true && currentUserState!== null) ? (<div>        <TopBar userName={currentUserState.userName}/> 
     <ProSidebarProvider>
 
