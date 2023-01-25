@@ -30,6 +30,7 @@ import FirmListTable from "./components/FirmListTable/FirmListTable";
 import Login from "./components/Login/Login";
 import TopBar from "./components/TopBar/TopBar";
 import ConditionalRoute from "./components/ConditionalRoute/ConditionalRoute";
+import SignUp from "./components/SignUp/S ignUp";
 function AppTest(props) {
   debugger;
   const [a, b] = useState(Date.now());
@@ -37,7 +38,7 @@ function AppTest(props) {
   const [isCurrentUserAskedState, setcurrentUserAsked] = useState(false);
   const [currentUserState, setCurrentUser] = useState(null);
   const [isPreloaderShownState, setPreloaderShown] = useState(false);
-  const baseUrl = "http://localhost:5103/api/CorporateDiscountsAdmin";
+  let baseUrl = "https://localhost:44377/api/CorporateDiscountsAdmin";
   const [myModalState, setMyModal] = useState({
     isOpen: false,
     content: null,
@@ -90,9 +91,10 @@ function AppTest(props) {
         ></Route>
 
         <Route
-          path="/indirimdüzenle"
+          path="/"
           element={
-            <ConditionalRoute currentUserState={currentUserState}>
+            <ConditionalRoute currentUserState={currentUserState}       baseUrl={baseUrl}>
+                baseUrl={baseUrl}
               <DiscountFilterAndCrud
                 baseUrl={baseUrl}
                 setPreloaderShown={setPreloaderShown}
@@ -105,7 +107,8 @@ function AppTest(props) {
         <Route
           path="/kategoriDuzenle"
           element={
-            <ConditionalRoute currentUserState={currentUserState}>
+            <ConditionalRoute currentUserState={currentUserState}       baseUrl={baseUrl}>
+                  
               <CategoryListTable
                 baseUrl={baseUrl}
                 setPreloaderShown={setPreloaderShown}
@@ -117,13 +120,26 @@ function AppTest(props) {
         <Route
           path="/firmaDuzenle"
           element={
-            <ConditionalRoute currentUserState={currentUserState}>
+            <ConditionalRoute currentUserState={currentUserState}    baseUrl={baseUrl}>
+                     
               <FirmListTable
                 baseUrl={baseUrl}
                 setPreloaderShown={setPreloaderShown}
                 setMyModal={setMyModal}
               />
             </ConditionalRoute>
+          }
+        ></Route>
+              <Route
+          path="/signUp"
+          element={     
+                     
+              <SignUp
+                baseUrl={baseUrl}
+                setPreloaderShown={setPreloaderShown}
+                setMyModal={setMyModal}
+              />
+      
           }
         ></Route>
       </Routes>
