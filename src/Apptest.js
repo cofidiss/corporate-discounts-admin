@@ -30,7 +30,7 @@ import FirmListTable from "./components/FirmListTable/FirmListTable";
 import Login from "./components/Login/Login";
 import TopBar from "./components/TopBar/TopBar";
 import ConditionalRoute from "./components/ConditionalRoute/ConditionalRoute";
-import SignUp from "./components/SignUp/S ignUp";
+import SignUp from "./components/SignUp/SignUp";
 function AppTest(props) {
   debugger;
   const [a, b] = useState(Date.now());
@@ -38,10 +38,11 @@ function AppTest(props) {
   const [isCurrentUserAskedState, setcurrentUserAsked] = useState(false);
   const [currentUserState, setCurrentUser] = useState(null);
   const [isPreloaderShownState, setPreloaderShown] = useState(false);
-  let baseUrl = "https://localhost:44377/api/CorporateDiscountsAdmin";
+  let baseUrl = "http://localhost:5103/api/CorporateDiscountsAdmin";
   const [myModalState, setMyModal] = useState({
     isOpen: false,
     content: null,
+    closeHandler: null
   });
 
   function GetUserInfo() {
@@ -67,9 +68,9 @@ function AppTest(props) {
     <BrowserRouter>
       <Preloader isShown={isPreloaderShownState}></Preloader>
       <MyModal
-        closeModal={(e) => {
+        closeModal={ myModalState.closeHandler === null ? (e) => {
           setMyModal({ isOpen: false, content: null });
-        }}
+        } : myModalState.closeHandler }
         isOpen={myModalState.isOpen}
       >
         {myModalState.content}
@@ -131,13 +132,14 @@ function AppTest(props) {
           }
         ></Route>
               <Route
-          path="/signUp"
+          path="/signUp/:prevPage"
           element={     
                      
               <SignUp
                 baseUrl={baseUrl}
                 setPreloaderShown={setPreloaderShown}
                 setMyModal={setMyModal}
+                setcurrentUserAsked = {setcurrentUserAsked}
               />
       
           }

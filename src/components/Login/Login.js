@@ -63,7 +63,7 @@ loginPromise.then(x=>{navigate("/" + prevPage);debugger;setcurrentUserAsked(fals
 
       <button onClick={onLoginClick}>Giriş</button>
      <div><p> üye ol</p>
-     <button onClick={x=>navigate("/signUp")}> Kayıt ol</button>
+     <button onClick={x=>navigate("/signUp/"+ prevPage)}> Kayıt ol</button>
      </div>
     </div>
 
