@@ -11,7 +11,7 @@ export default function Login(props) {
   const setcurrentUserAsked = props.setcurrentUserAsked;
   const setCurrentUser = props.setCurrentUser;
   setCurrentUser(null);
-const baseUrl = props.baseUrl;
+let baseUrl = props.baseUrl;
 const setIsAdminAsked = props.setIsAdminAsked;
   const [formState, setForm] = useState({userName:"",password:""});
   let { prevPage } = useParams();
@@ -34,7 +34,7 @@ const setIsAdminAsked = props.setIsAdminAsked;
 
 
 const onLoginClick = (event) => {
-
+debugger;
   const loginPromise =    fetch(`${baseUrl}/Login`, {
     method: 'POST', // or 'PUT',
     headers: {
@@ -62,7 +62,9 @@ loginPromise.then(x=>{navigate("/" + prevPage);debugger;setcurrentUserAsked(fals
       <input type="text" name="password" value={formState.password} onChange={onFormChange}/>
 
       <button onClick={onLoginClick}>Giriş</button>
-     
+     <div><p> üye ol</p>
+     <button onClick={x=>navigate("/signUp")}> Kayıt ol</button>
+     </div>
     </div>
 
   );

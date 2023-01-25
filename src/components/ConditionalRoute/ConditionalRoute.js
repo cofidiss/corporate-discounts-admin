@@ -3,6 +3,7 @@ import { Navigate ,useLocation} from 'react-router-dom'
 import TopBar from "../TopBar/TopBar";
 function ConditionalRoute(props){
 debugger;
+const baseUrl= props.baseUrl;
 const currentUserState = props.currentUserState;
 let location = useLocation();
 const children = props.children;
@@ -12,7 +13,7 @@ if(currentUserState === null){
 }
 if(currentUserState !== null && currentUserState.isAdmin === true){
  
-    renderedElement = (<div>   <TopBar></TopBar>{children} </div>);
+    renderedElement = (<div>   <TopBar username={currentUserState.username} baseUrl={baseUrl}></TopBar>{children} </div>);
 }
 if(currentUserState !== null && currentUserState.isAdmin === false){
 
