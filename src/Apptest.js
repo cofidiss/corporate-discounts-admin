@@ -68,8 +68,8 @@ function AppTest(props) {
     <BrowserRouter>
       <Preloader isShown={isPreloaderShownState}></Preloader>
       <MyModal
-        closeModal={ myModalState.closeHandler === null ? (e) => {
-          setMyModal({ isOpen: false, content: null });
+        closeHandler={ myModalState.closeHandler == null ? (e) => {
+          setMyModal({ isOpen: false, content: null,closeHandler:null });
         } : myModalState.closeHandler }
         isOpen={myModalState.isOpen}
       >

@@ -62,7 +62,7 @@ loginPromise.then(x=>{navigate("/" + prevPage);debugger;setcurrentUserAsked(fals
       <input type="text" name="password" value={formState.password} onChange={onFormChange}/>
 
       <button onClick={onLoginClick}>Giriş</button>
-     <div><p> üye ol</p>
+     <div>
      <button onClick={x=>navigate("/signUp/"+ prevPage)}> Kayıt ol</button>
      </div>
     </div>
